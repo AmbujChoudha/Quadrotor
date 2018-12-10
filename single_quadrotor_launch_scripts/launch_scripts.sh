@@ -2,7 +2,7 @@
 
 # This script launches Gazebo with an empty world and the Iris quadrotor model.
 # This script must be placed in the home folder along with its dependencies which are:
-#	default_gazebo.sh
+#	launch_build_gazebo.sh
 #	launch_ros_gazebo.sh
 #	launch_mavros.sh
 
