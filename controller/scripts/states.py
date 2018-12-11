@@ -17,6 +17,8 @@ from std_msgs.msg import Header
 from geometry_msgs.msg import Twist
 from geometry_msgs.msg import Point
 from nav_msgs.msg import Odometry as Odom
+from std_msgs.msg import String
+
 
 current_pose = PoseStamped()
 set_vel = TwistStamped()
@@ -26,16 +28,17 @@ def state_callback(state_data):
 	global current_state
 	current_state = state_data
 
-class base_state:
-	def __init__(): 
+class base_state():
+
+	def __init__(self): 
 		rospy.init_node('Controller', anonymous='True')
 		self.my_state = rospy.Subscriber('/mavros/state',State,state_callback) #subscribing to local state 
 		##vel_pub = rospy.Publisher('/mavros/setpoint_velocity/cmd_vel', TwistStamped, queue_size = 1) #publishing the velocity 
 		#local_position_subscribe = rospy.Subscriber('/mavros/local_position/pose', PoseStamped, pos_sub_callback) #updating the local position
 		self.service_timeout = 30
-	        rospy.loginfo("waiting for ROS services")
+	    	rospy.loginfo("waiting for ROS services")
 	    #Publisher to send commands to the state machine
-	    self.state_machine_command=rospy.Publisher('state_machine/command',std_msgs::String)
+	    	self.state_machine_command=rospy.Publisher('state_machine/command',String)
 
 
 class IdleNotArmed(base_state):
@@ -48,8 +51,8 @@ class IdleNotArmed(base_state):
 class Arming (base_state):
 	''' This state tries to arm the motors. If they are armed, transition to "Grounded" '''
 
-	def __init__():
-		super().__init__():
+	#def __init__(self):
+		#super().__init__(self):
 
 	def run(): 
 		# Ensure all services are running, and switch Quad to offboard
@@ -63,7 +66,8 @@ class Arming (base_state):
 	        mode = set_mode(custom_mode='OFFBOARD')
 	    else:
 	    	self.state_machine_command.publish('Grounded')
-		rospy.wait_for_service('mavros/set_mode', service_timeout)
+
+	    rospy.wait_for_service('mavros/set_mode', service_timeout)
 		rospy.loginfo("ROS services are up")
 		if not mode.mode_sent:
 				rospy.logerr("failed to send mode command")
@@ -78,38 +82,38 @@ class Grounded():
 		else:
 			pass
 	
-class Waypoint: 
+#class Waypoint: 
 
 
 
 
 
-class Search: 
+#class Search: 
 
 
 
 
 
-class Inactive:
+#class Inactive:
 
 
 
 
-class Landed:
-
-
-
-
-
-
-class Hover: 
+#class Landed:
 
 
 
 
 
 
-class Potential_Avoidance: 
+#class Hover: 
+
+
+
+
+
+
+#class Potential_Avoidance: 
 
 
 
