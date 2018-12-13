@@ -10,7 +10,11 @@ from mavros import command
 from mavros_msgs.srv import CommandBool, ParamGet, SetMode
 from mavros_msgs.msg import State
 import rospy
+<<<<<<< HEAD
 import states  
+=======
+import states  ##script 
+>>>>>>> 5051e3e97eed483c04215c55c2fe4673a4ef4b0c
 import inspect
 from std_msgs.msg import String
 
