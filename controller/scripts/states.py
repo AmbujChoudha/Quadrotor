@@ -35,7 +35,7 @@ class base_state:
 		self.service_timeout = 30
 	        rospy.loginfo("waiting for ROS services")
 	    #Publisher to send commands to the state machine
-	    self.state_machine_command=rospy.Publisher('state_machine/command',std_msgs::String)
+	    	self.state_machine_command=rospy.Publisher('state_machine/command',String)
 
 
 class IdleNotArmed(base_state):

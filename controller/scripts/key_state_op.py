@@ -21,7 +21,7 @@ class Key_State_Op():
 		print "A: to set mode to ARM the drone"
 		print "S: to set mode to STABILIZE"
 		print "D: to set mode to DISARM the drone"
-	   # print "T: to set mode to TAKEOFF"
+	    #print "T: to set mode to TAKEOFF"
 	    #print "L: to set mode to LAND"
 	    #print "LO: print GPS coordinates"
 
@@ -46,7 +46,7 @@ class Key_State_Op():
 
 
 if __name__ == '__main__':
+	rospy.init_node('map', anonymous=True) #initializing the node
 	kso = Key_State_Op()
-	##rospy.init_node('map', anonymous=True) #initializing the node
 	kso.menu()
 	kso.run()
