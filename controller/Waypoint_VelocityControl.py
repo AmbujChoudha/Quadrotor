@@ -1,5 +1,5 @@
 #/usr/bin/python
-#Reference: PX4/Firmware 
+#Reference: PX4/Firmware
 import rospy
 import math
 import numpy as np
@@ -12,7 +12,7 @@ from mavros_msgs.msg import State
 
 
 
-current_pose = PoseStamped()   
+current_pose = PoseStamped()
 set_vel = TwistStamped()
 current_state = State()
 
@@ -22,11 +22,11 @@ def state_callback(state_data):
 	current_state = state_data
 
 def main():
-	global vel_pub
+	#global vel_pub
 	rospy.init_node('Velocity_Control', anonymous='True')
 
-	my_state = rospy.Subscriber('/mavros/state',State,state_callback) #subscribing to local state 
-	vel_pub = rospy.Publisher('/mavros/setpoint_velocity/cmd_vel', TwistStamped, queue_size = 1) #publishing the velocity 
+	#my_state = rospy.Subscriber('/mavros/state',State,state_callback) #subscribing to local state
+	#vel_pub = rospy.Publisher('/mavros/setpoint_velocity/cmd_vel', TwistStamped, queue_size = 1) #publishing the velocity
 	#local_position_subscribe = rospy.Subscriber('/mavros/local_position/pose', PoseStamped, pos_sub_callback) #updating the local position
 
 	service_timeout = 30

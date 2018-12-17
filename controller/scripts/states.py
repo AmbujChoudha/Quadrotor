@@ -26,9 +26,9 @@ class base_state():
 		##vel_pub = rospy.Publisher('/mavros/setpoint_velocity/cmd_vel', TwistStamped, queue_size = 1) #publishing the velocity
 		#local_position_subscribe = rospy.Subscriber('/mavros/local_position/pose', PoseStamped, pos_sub_callback) #updating the local position
 		self.service_timeout = 30
-	    	rospy.loginfo("waiting for ROS services")
+	    	rospy.loginfo("waiting for ROS services1")
 	         #Publisher to send commands to the state machine
-	    	self.state_machine_command=rospy.Publisher('state_machine/command',String)
+	    	#self.state_machine_command=rospy.Publisher('state_machine/command',String)
 
 
 class IdleNotArmed(base_state):
@@ -38,8 +38,10 @@ class IdleNotArmed(base_state):
 
 
 
+#class Arming (base_state):
 class Arming (base_state):
 	''' This state tries to arm the motors. If they are armed, transition to "Grounded" '''
+	
 
 	#def __init__(self):
 		#super().__init__(self):
@@ -48,19 +50,22 @@ class Arming (base_state):
 		# Ensure all services are running, and switch Quad to offboard
 		#while current_state.mode != "OFFBOARD" or not current_state.armed:
 		#If it is not armed, try to arm, otherwise tell the state machine to switch to armed
-	    	if current_state.mode != "OFFBOARD" or not current_state.armed:
-			arm = rospy.ServiceProxy('/mavros/cmd/arming', mavros_msgs.srv.CommandBool)
-	        	arm(True)
-	        	set_mode = rospy.ServiceProxy('/mavros/set_mode',SetMode)
-	        	mode = set_mode(custom_mode='OFFBOARD')
-	    	else:
-	    		self.state_machine_command.publish('Grounded')
+		while not rospy.is_shutdown():
 
-	    	rospy.wait_for_service('mavros/set_mode', service_timeout)
-		rospy.loginfo("ROS services are up")
-		if not mode.mode_sent:
-			rospy.logerr("failed to send mode command")
+			print "here!!"
+	    		if current_state.mode != "OFFBOARD" or not current_state.armed:
+				arm = rospy.ServiceProxy('/mavros/cmd/arming', mavros_msgs.srv.CommandBool)
+	        		arm(True)
+	        		set_mode = rospy.ServiceProxy('/mavros/set_mode',SetMode)
+	        		mode = set_mode(custom_mode='OFFBOARD')
+	    		else:
+	    			self.state_machine_command.publish('Grounded')
 
+	    		rospy.wait_for_service('mavros/set_mode', self.service_timeout)
+			rospy.loginfo("ROS services are up")
+			if not mode.mode_sent:
+				rospy.logerr("failed to send mode command")
+		rospy.spin()
 
 class Grounded():
 	''' When in this state, the quadrotor is on the ground, or, it is not, it is landing '''
