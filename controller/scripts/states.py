@@ -1,3 +1,4 @@
+lear
 import rospy
 import math
 import numpy as np
@@ -41,7 +42,7 @@ class IdleNotArmed(base_state):
 #class Arming (base_state):
 class Arming (base_state):
 	''' This state tries to arm the motors. If they are armed, transition to "Grounded" '''
-	
+
 
 	#def __init__(self):
 		#super().__init__(self):
