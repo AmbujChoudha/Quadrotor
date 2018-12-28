@@ -41,6 +41,8 @@ class Key_State_Op():
 			print "|",x,"|"
 			if x=='A':
 				self.publish("Arming")
+			if x=='T':
+				self.publish("Takeoff")
 			if x=='E':
 				break
 
