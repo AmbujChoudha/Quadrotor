@@ -3,8 +3,8 @@ The description of this repositor is following:
 multi_quadrotors: bash scripts launch multiple quadrotrs in in Gazebo platform.
 single_quadrotors: bash scripts launch single quadrotors in the Gazebo platform.
 python_scripts: It has two files (1) state_machine.py (2) states.py 
-state_machine.py: The idea of the state machine is to control all states, add new states and update current states. The code works following way: 
-
+(1) state_machine.py: The idea of the state machine is to control all states, add new states and update current states. The code works following way: 
+(2) states.py: has the descriptions of the states. 
 [note: -> program propagation] 
 
 (i) Program starts from sm = StateMachine(): is creating StateMachine instance ->  def __init__(self): all the constructor node is being initialized here. 
