@@ -1,6 +1,6 @@
 #!/usr/bin/python
+''' Robotics Lab-Boston Univerity '''
 """state_machine.py
-State Machine for the Bebop Follow package.
 
 This module creates the state_machine node and instantiates all the states, running the active state at 100ms intervals.
 
@@ -16,7 +16,7 @@ from std_msgs.msg import String
 
 class StateMachine():
     """State Machine class houses the main state machine.
-    
+
     Attributes:
         states: A dictionary with string keys of the state class names and State values with each State
         current_state: A string with the name of the active state.
@@ -34,15 +34,15 @@ class StateMachine():
         self.states = {}
         self.current_state = ''
         self.cmd_vel_topic = rospy.Publisher("cmd_vel_topic", String, queue_size=1)
-        self.change_state_topic = rospy.Subscriber("change_state", ChangeState, self._change_state_wrapper) 
-        for state in inspect.getmembers(states,inspect.isclass):                  ##getmembers() function retrieves the members of an object such as a class or module  
+        self.change_state_topic = rospy.Subscriber("change_state", ChangeState, self._change_state_wrapper)
+        for state in inspect.getmembers(states,inspect.isclass):                  ##getmembers() function retrieves the members of an object such as a class or module
             if inspect.getmodule(state[1]) == states:                             ##Return the name of the module named by the file path
                 self._add_state(state[1])
         self.change_state('GroundedState', '')
 
     def _add_state(self, new_state):
         """Adds a state to the dictionary
-        
+
         The string name of the state is used as the key for the dictionary and the value is an instance of the state
         Ensures that the class has a callable next method. If there is one, the program assumes that the class is properly implemented and not an abstract state.
 
@@ -52,7 +52,7 @@ class StateMachine():
         if type(new_state) == type:             ##?????????????????????
             new_state = new_state.__name__      ##??????????????/
         if not new_state in self.states:
-            new_state_instance = getattr(states, new_state) 
+            new_state_instance = getattr(states, new_state)
             try:
                 if callable(new_state_instance.next):   ##what is callable next method ????????????????????/
                     self.states[new_state] = new_state_instance()
@@ -70,7 +70,7 @@ class StateMachine():
         Sets the new_state to be the active state and allows cmd_pub_m to read from it.
 
         Args:
-            new_state: A string with the name of the class of the desired new state. 
+            new_state: A string with the name of the class of the desired new state.
                 Or a derivative of the State class.
             caller_state: A string with the name of the class of the state that called the change_state function.
         """
@@ -81,7 +81,7 @@ class StateMachine():
             else:
                 self.current_state = new_state.__name__   ###???????????
             #TODO make sure this is the right topic for publishing manual control.
-            self.cmd_vel_topic.publish("cmd_vel_" + new_state) 
+            self.cmd_vel_topic.publish("cmd_vel_" + new_state)
 
     def _change_state_wrapper(self, data):
         """A wrapper method for change_state
