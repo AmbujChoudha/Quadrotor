@@ -113,7 +113,7 @@ class State(object):
 
     def run(self):
         self.cmd_vel.publish(self.msg)
-
+'''
 class AutoState(State):
     """AutoState abstract class is for states in autonomous mode.
 
@@ -367,7 +367,7 @@ class CriticalState(State):
             self.change_state.publish(self.header,type(self).__name__)
         else:
             self.change_state.publish(self.header,type(self).__name__)
-
+'''
 # Grounded State
 # Mode: Follow, Manual
 # Conditions: Motors off
