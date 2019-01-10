@@ -23,3 +23,6 @@ The description of this repository is following:<br />
 
 (viii) -> after this initial initialization process, if subscriber node subscribes to a topic with new state, _change_state_wrapper will be called with the ROS message from the topic. _change_state_wrapper  calls the change_state function with old state and new state as a parameter. Change state adds new state if it does not exist, then update the current state. Sm.run will run with new current state class.  <br /> 
 
+
+**initial_scripts**: is showing the intial approach which was not efficient. 
+
