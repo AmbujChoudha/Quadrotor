@@ -54,7 +54,7 @@ class StateMachine():
         if not new_state in self.states:
             new_state_instance = getattr(states, new_state)
             try:
-                if callable(new_state_instance.next):   ##what is callable next method ????????????????????/
+                if callable(new_state_instance.next):   
                     self.states[new_state] = new_state_instance()
                     self.cmd_vel_topic.publish("cmd_vel_" + new_state) ##publishing the new state ................. who is subscribing ??
                 else:
