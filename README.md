@@ -4,7 +4,6 @@ The description of this repository is following:<br />
 **single_quadrotors**: bash scripts launch single quadrotors in the Gazebo platform.<br /> 
 **python_scripts**: It has two files (1) state_machine.py (2) states.py <br /> 
 (1) **state_machine.py**: The idea of the state machine is to control all states, add new states and update current states. The code works following way: <br /> 
-(2) **states.py**: has the descriptions of the states. <br /> 
 [note: -> program propagation] 
 
 (i) Program starts from sm = StateMachine(): is creating StateMachine instance ->  def __init__(self): all the constructor node is being initialized here. <br /> 
@@ -23,6 +22,7 @@ The description of this repository is following:<br />
 
 (viii) -> after this initial initialization process, if subscriber node subscribes to a topic with new state, _change_state_wrapper will be called with the ROS message from the topic. _change_state_wrapper  calls the change_state function with old state and new state as a parameter. Change state adds new state if it does not exist, then update the current state. Sm.run will run with new current state class.  <br /> 
 
+(2) **states.py**: has the descriptions of the states. <br /> 
 
 **initial_scripts**: is showing the intial approach which was not efficient. 
 
