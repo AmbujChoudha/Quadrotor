@@ -19,7 +19,7 @@ The description of this repository is following:<br />
 (vi)-> with 'GroundedState' as argument, initially the change state is updating the current state as **'GroundedState'**.<br /> 
 
 (vii) -> sm.run() will run the current state **self.states[self.current_state].run()** which is running the base class run function for the first time, preassumbly, initially the program is considering the ground to be run first which is calling the base class run() function. Inside the bases class,  **def run(self):   self.cmd_vel.publish(self.msg)**  is publishing the default parameter of the Twistamped message (0,0,0).  -> after this initial initialization process, if subscriber node subscribes to a topic with new state, **_change_state_wrapper** will be called with the ROS message from the topic. **_change_state_wrapper**  calls the change_state function with old state and new state as a parameter. Change state adds new state if it does not exist, then update the current state. Sm.run will run with new current state class. 
-
+<img src="./Images/state_machine.png" width="80%" />
 
 
 (2) **states.py**: has the descriptions of the states. <br /> 
