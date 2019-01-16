@@ -10,8 +10,8 @@ To add functionality please add a new state to states.py and modify state change
 import rospy
 import states
 import inspect
-from bebop_follow.msg import ChangeState
-#from mavros_msgs.msg import State
+#from bebop_follow.msg import ChangeState
+from mavros_msgs.msg import State
 from std_msgs.msg import String
 
 class StateMachine():

@@ -17,29 +17,33 @@ To be used in conjucntion with operator.py and potential_path.py
 import rospy
 import potential_path_vel as pp
 import controller
+
 from bebop_follow.msg import ChangeState
-#from mavros_msgs.msg import State
-
+from mavros_msgs.msg import State
+import math
+import numpy as np
 from threading import Timer
-
 from std_msgs.msg import String
 from std_msgs.msg import Empty
 from std_msgs.msg import Bool
 from std_msgs.msg import Header
-from bebop_msgs.msg import Ardrone3PilotingStateFlyingStateChanged
-
-from bebop_msgs.msg import Ardrone3PilotingStateAlertStateChanged
-
+#from bebop_msgs.msg import Ardrone3PilotingStateFlyingStateChanged
+#from bebop_msgs.msg import Ardrone3PilotingStateAlertStateChanged
+from mavros_msgs.msg import BatteryState
 from geometry_msgs.msg import Twist
-#from geometry_msgs.msg import TwistStamped  ## publish or subscribe to velocity 
-#from geometry_msgs.msg import PoseStamped        
-
+from geometry_msgs.msg import TwistStamped  ## publish or subscribe to velocity 
+from geometry_msgs.msg import PoseStamped        
 from geometry_msgs.msg import Point
 from nav_msgs.msg import Odometry as Odom
+from mavros_msgs.srv import CommandBool, ParamGet, SetMode
 
+
+##important ros msg 
+##rosmsg show sensor_msgs/BatteryState
+##rostopic info /mavros/battery
 
 class State(object):
-    """State class is the base class for the bebop_follow state machine
+    """State class is the base class 
 
     Attributes:
         cmd_vel: A Publisher that publishes velocity commands to cmd_pub_m. The topic published is 'cmd_vel_[Class Name]'
@@ -54,22 +58,40 @@ class State(object):
         Subscribes to operation_mode, FlyingStateChanged, and AlertStateChanged
         Sets the header's frame_id to the class name
         """
-        self.cmd_vel = rospy.Publisher("cmd_vel_"+type(self).__name__, Twist, queue_size=1)
-        #self.cmd_vel = rospy.Publisher("cmd_vel_"+type(self).__name__, TwistStamped, queue_size=1)
-        self.msg = Twist()
-        #self.msg = TwistStamped()
+        #self.cmd_vel = rospy.Publisher("cmd_vel_"+type(self).__name__, Twist, queue_size=1)
+        self.cmd_vel = rospy.Publisher("cmd_vel_"+type(self).__name__, TwistStamped, queue_size=1)   ### cmd_pub = rospy.Publisher('/mavros/setpoint_velocity/cmd_vel', TwistStamped, queue_size = 1)
+        #self.msg = Twist()
+        self.msg = TwistStamped()
+        self.position = PoseStamped()
+        self.current_pose = PoseStamped()
+        self.local_position_subscribe = rospy.Subscriber('/mavros/local_position/pose', PoseStamped, self.pos_sub_callback)
 
         rospy.Subscriber("operation_mode", String, self.update_operation_mode) #########???????? 
 
         rospy.Subscriber("bebop/states/ardrone3/PilotingState/FlyingStateChanged", Ardrone3PilotingStateFlyingStateChanged, self.update_flying)
+        
+        self.my_state = rospy.Subscriber('/mavros/state',State,self.state_callback)
+        self.current_state = State()
 
-        rospy.Subscriber("bebop/states/ardron3/PilotingState/AlertStateChanged", Ardrone3PilotingStateAlertStateChanged, self.update_alert)
+        #rospy.Subscriber("bebop/states/ardron3/PilotingState/AlertStateChanged", Ardrone3PilotingStateAlertStateChanged, self.update_alert)
+        rospy.Subscriber("/mavros/battery", BatteryState, self.update_alert)
 
 
         #TODO invesitgate if it would be a problem if all the states change to critical state and the active state's message gets pushed out of the buffer.
         self.header = Header()
         self.her.frame_id = type(self).__name__
         self.change_state = rospy.Publisher("change_state", ChangeState, queue_size = 10)
+
+        self.service_timeout = 30 
+            rospy.loginfo("waiting for ROS services::base state")
+
+    def update_local_position(self, data):
+        ''' update the quadrotor local position ''' 
+        self. current_pose = data 
+        self.x = self.current_pose.pose.position.x 
+        self.y = self.current_pose.pose.position.y 
+        self.z = self.current_pose.pose.position.z 
+
 
     def update_operation_mode(self, data):
         """Handles changes in operation mode on the operator interface
@@ -91,8 +113,8 @@ class State(object):
         Args:
             data: An Alert State Changed message.
         """
-        if data.state == data.state_low_battery or data.state == data.state_critical_battery:
-            self.next('low battery')
+        if data.percentage < 15 :
+            self.next('low battery')  ######??????????????????
         else:
             rospy.logwarn("Other warning: " + str(data.state))
 
@@ -111,8 +133,20 @@ class State(object):
         elif data.state == data.state_emergency_landing:
             rospy.logwarn("Emergency Landing State Entered")
 
+    def state_callback (self, state_data):
+        """ updating the current state """ 
+        global current_state 
+        self.current_state = state_data
+
+
     def run(self):
         self.cmd_vel.publish(self.msg)
+
+
+
+
+
+
 '''
 class AutoState(State):
     """AutoState abstract class is for states in autonomous mode.
@@ -156,7 +190,7 @@ class AutoState(State):
             self.next('first')
         elif data.data == 'second':
             self.controller_degree = 'second'
-            self.next('second'
+            self.next('second')
         else:
             rospy.logwarn("Unknown mode " + data.data)
 
@@ -368,23 +402,7 @@ class CriticalState(State):
         else:
             self.change_state.publish(self.header,type(self).__name__)
 '''
-# Grounded State
-# Mode: Follow, Manual
-# Conditions: Motors off
-# Actions: Nothing
-class GroundedState(State):
-    def __init__(self):
-        super(GroundedState, self).__init__()
 
-    def next(self, event):
-        self.header.stamp = rospy.Time.now()
-        if event == 'state_machine_ready':
-            return True
-        elif event == 'flying':
-            rospy.loginfo("Successfully took off, switching to Flying State")
-            self.change_state.publish(self.header,'FlyingState')
-        else:
-            pass
 
 # Flying State
 # Mode: Follow
@@ -413,3 +431,89 @@ class FlyingState(State):
             self.change_state.publish(self.header,'CriticalState')
         else:
             pass
+
+class FlyingState(State):
+
+    def __init__(self):
+        super(FlyingState, self).__init() 
+
+    def run (self):
+        #gola position 
+        xg = 0 
+        yg = 0
+        zg = 4 
+    # Position error between setpoint and current position 
+    x_error = xg - x 
+    y_error = yg - y 
+    z_error = zg - z 
+
+    #velocity vector to get to the goal 
+    gx = .5*x_error 
+    gy = .5*y_error
+    gz = .7*z_error
+
+    #set limits on the velocity the quad can have 
+    if abs(gx) > 2: 
+        gx = np.sign(gx)*2 
+    if abs(gy) > 2: 
+        gy = np.sign(gy)*2
+    if abs(gz) > 2: 
+        cz = np.sign(gz)*2
+
+
+    self.msg.linear.x = gx 
+    self.msg.linear.y = gy 
+    self.msg.linear.z = gz 
+
+    super(FlyingState, self).run()
+
+
+
+# Grounded State
+# Mode: Follow, Manual
+# Conditions: Motors off
+# Actions: Nothing
+class GroundedState(State):
+    def __init__(self):
+        super(GroundedState, self).__init__()
+
+    def next(self, event):
+        self.header.stamp = rospy.Time.now()
+        if event == 'state_machine_ready':
+            return True
+        elif event == 'flying':
+            rospy.loginfo("Successfully took off, switching to Flying State")
+            self.change_state.publish(self.header,'FlyingState')
+        else:
+            pass
+
+class GroundedState(State):
+    def __init__(self):
+        super(GroundedState,self).__init__ 
+    def run(self):
+        while self.current_state != "AUTO.LAND": 
+            set_mode = rospy.ServiceProxy('/mavros/set_mode', SetMode)
+            mode = set_mode (custom = 'AUTO.LAND')
+            rospy.wait_for_services('mavros/set_mode', service_timeout)
+        if not mode.mode_sent: 
+            rospy.logerr("failed to send mode command")
+
+
+
+class ArmingState (State):
+    ''' This state will arm the quadrotor ''' 
+    def __init__(self):
+        super(ArmingState, self).__init__()
+
+    def run(self):
+        ''' Ensure all services are running, and switch Quad to offboard '''
+        while self.current_state != "OFFBOARD" or not self.current_state.armed: 
+            arm = rospy.ServiceProxy('/mavros/cmd/arming', mavros_msgs.srv.CommandBool) 
+            arm(True)
+            set_mode = rospy.ServiceProxy('/mavros/set_mode', SetMode)
+            mode = set_mode(custom_mode = 'OFFBOARD')
+            rospy.wait_for_services('mavros/set_mode', self.service_timeout)
+        rospy.loginfo("ROS services are up::arming")
+        if not mode.mode_sent: 
+            rospy.logerr("falied to send mode command")
+
