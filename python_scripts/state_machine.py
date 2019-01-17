@@ -77,7 +77,8 @@ class StateMachine():
         if caller_state == self.current_state or self.current_state == '':
             self._add_state(new_state)
             if type(new_state) == str:
-                self.current_state = new_state
+                if self.new_state.is_transition_allowed(current_state):####think about
+                    self.current_state = new_state
             else:
                 self.current_state = new_state.__name__   ###???????????
             #TODO make sure this is the right topic for publishing manual control.

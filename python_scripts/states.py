@@ -59,7 +59,8 @@ class State(object):
         Sets the header's frame_id to the class name
         """
         #self.cmd_vel = rospy.Publisher("cmd_vel_"+type(self).__name__, Twist, queue_size=1)
-        self.cmd_vel = rospy.Publisher("cmd_vel_"+type(self).__name__, TwistStamped, queue_size=1)   ### cmd_pub = rospy.Publisher('/mavros/setpoint_velocity/cmd_vel', TwistStamped, queue_size = 1)
+        self.cmd_vel = rospy.Publisher("cmd_vel_"+type(self).__name__, TwistStamped, queue_size=1)   
+        ### cmd_pub = rospy.Publisher('/mavros/setpoint_velocity/cmd_vel', TwistStamped, queue_size = 1)
         #self.msg = Twist()
         self.msg = TwistStamped()
         self.position = PoseStamped()
@@ -93,7 +94,7 @@ class State(object):
         self.z = self.current_pose.pose.position.z 
 
 
-    def update_operation_mode(self, data):
+   ''' def update_operation_mode(self, data):
         """Handles changes in operation mode on the operator interface
 
         Args:
@@ -105,9 +106,9 @@ class State(object):
         elif data.data == 'auto':
             self.next('auto')
         else:
-            rospy.logwarn("Unknown mode " + data.data)
+            rospy.logwarn("Unknown mode " + data.data)'''
 
-    def update_alert(self, data):
+   ''' def update_alert(self, data):
         """Handles alerts given by the bebop. 
         
         Args:
@@ -116,9 +117,9 @@ class State(object):
         if data.percentage < 15 :
             self.next('low battery')  ######??????????????????
         else:
-            rospy.logwarn("Other warning: " + str(data.state))
+            rospy.logwarn("Other warning: " + str(data.state))'''
 
-    def update_flying(self, data):
+   ''' def update_flying(self, data):
         """Handles alerts about the Flying State changing
 
         Alerts the states as to when the Bebop if flying and when it has landed.
@@ -131,7 +132,7 @@ class State(object):
         elif data.state == data.state_hovering or data.state == data.state_flying:
             self.next("flying")
         elif data.state == data.state_emergency_landing:
-            rospy.logwarn("Emergency Landing State Entered")
+            rospy.logwarn("Emergency Landing State Entered")'''
 
     def state_callback (self, state_data):
         """ updating the current state """ 
@@ -497,6 +498,10 @@ class GroundedState(State):
             rospy.wait_for_services('mavros/set_mode', service_timeout)
         if not mode.mode_sent: 
             rospy.logerr("failed to send mode command")
+
+    def is_transition_allowed(self,new_state):
+        return new_state in ['ArmingState']###wh
+        return new_state not in ['Flying']####bl
 
 
 
