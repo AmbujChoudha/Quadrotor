@@ -13,7 +13,7 @@ import inspect
 #from bebop_follow.msg import ChangeState
 from mavros_msgs.msg import State
 from std_msgs.msg import String
-
+from mavros import command
 class StateMachine():
     """State Machine class houses the main state machine.
 
@@ -34,7 +34,7 @@ class StateMachine():
         self.states = {}
         self.current_state = ''
         self.cmd_vel_topic = rospy.Publisher("cmd_vel_topic", String, queue_size=1)
-        self.change_state_topic = rospy.Subscriber("change_state", ChangeState, self._change_state_wrapper)
+        self.change_state_topic = rospy.Subscriber('state_machine/command', ChangeState, self._change_state_wrapper)
         for state in inspect.getmembers(states,inspect.isclass):                  ##getmembers() function retrieves the members of an object such as a class or module
             if inspect.getmodule(state[1]) == states:                             ##Return the name of the module named by the file path
                 self._add_state(state[1])
