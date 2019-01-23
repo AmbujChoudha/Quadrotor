@@ -14,6 +14,7 @@ import inspect
 from mavros_msgs.msg import State
 from std_msgs.msg import String
 from mavros import command
+from std_msgs.msg import String
 class StateMachine():
     """State Machine class houses the main state machine.
 
@@ -34,7 +35,7 @@ class StateMachine():
         self.states = {}
         self.current_state = ''
         self.cmd_vel_topic = rospy.Publisher("cmd_vel_topic", String, queue_size=1)
-        self.change_state_topic = rospy.Subscriber('state_machine/command', ChangeState, self._change_state_wrapper)
+        self.change_state_topic = rospy.Subscriber('state_machine/command', String, self._change_state_wrapper)
         for state in inspect.getmembers(states,inspect.isclass):                  ##getmembers() function retrieves the members of an object such as a class or module
             if inspect.getmodule(state[1]) == states:                             ##Return the name of the module named by the file path
                 self._add_state(state[1])
@@ -77,8 +78,8 @@ class StateMachine():
         if caller_state == self.current_state or self.current_state == '':
             self._add_state(new_state)
             if type(new_state) == str:
-                if self.new_state.is_transition_allowed(current_state):####think about
-                    self.current_state = new_state
+                #if self.new_state.is_transition_allowed(current_state):####think about
+                self.current_state = new_state
             else:
                 self.current_state = new_state.__name__   ###???????????
             #TODO make sure this is the right topic for publishing manual control.

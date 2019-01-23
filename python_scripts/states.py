@@ -15,10 +15,6 @@ Each state holds a controller of their own and publishes commands to the cmd_pub
 To be used in conjucntion with operator.py and potential_path.py
 """
 import rospy
-import potential_path_vel as pp
-import controller
-
-from bebop_follow.msg import ChangeState
 from mavros_msgs.msg import State
 import math
 import numpy as np
@@ -27,9 +23,7 @@ from std_msgs.msg import String
 from std_msgs.msg import Empty
 from std_msgs.msg import Bool
 from std_msgs.msg import Header
-#from bebop_msgs.msg import Ardrone3PilotingStateFlyingStateChanged
-#from bebop_msgs.msg import Ardrone3PilotingStateAlertStateChanged
-from mavros_msgs.msg import BatteryState
+#from mavros_msgs.msg import BatteryState
 from geometry_msgs.msg import Twist
 from geometry_msgs.msg import TwistStamped  ## publish or subscribe to velocity 
 from geometry_msgs.msg import PoseStamped        
@@ -58,33 +52,22 @@ class State(object):
         Subscribes to operation_mode, FlyingStateChanged, and AlertStateChanged
         Sets the header's frame_id to the class name
         """
-        #self.cmd_vel = rospy.Publisher("cmd_vel_"+type(self).__name__, Twist, queue_size=1)
-        self.cmd_vel = rospy.Publisher("cmd_vel_"+type(self).__name__, TwistStamped, queue_size=1)   
-        ### cmd_pub = rospy.Publisher('/mavros/setpoint_velocity/cmd_vel', TwistStamped, queue_size = 1)
+          
+        self.cmd_pub = rospy.Publisher('/mavros/setpoint_velocity/cmd_vel', TwistStamped, queue_size = 1)
         #self.msg = Twist()
         self.msg = TwistStamped()
-        self.position = PoseStamped()
         self.current_pose = PoseStamped()
-        self.local_position_subscribe = rospy.Subscriber('/mavros/local_position/pose', PoseStamped, self.pos_sub_callback)
-
-        rospy.Subscriber("operation_mode", String, self.update_operation_mode) #########???????? 
-
-        rospy.Subscriber("bebop/states/ardrone3/PilotingState/FlyingStateChanged", Ardrone3PilotingStateFlyingStateChanged, self.update_flying)
-        
-        self.my_state = rospy.Subscriber('/mavros/state',State,self.state_callback)
         self.current_state = State()
-
+        self.local_position_subscribe = rospy.Subscriber('/mavros/local_position/pose', PoseStamped, self.update_local_position)
+        self.my_state = rospy.Subscriber('/mavros/state',State,self.state_callback)
         #rospy.Subscriber("bebop/states/ardron3/PilotingState/AlertStateChanged", Ardrone3PilotingStateAlertStateChanged, self.update_alert)
-        rospy.Subscriber("/mavros/battery", BatteryState, self.update_alert)
+        #rospy.Subscriber("/mavros/battery", BatteryState, self.update_alert)
 
 
         #TODO invesitgate if it would be a problem if all the states change to critical state and the active state's message gets pushed out of the buffer.
-        self.header = Header()
-        self.her.frame_id = type(self).__name__
-        self.change_state = rospy.Publisher("change_state", ChangeState, queue_size = 10)
-
+        #self.change_state = rospy.Publisher("change_state", ChangeState, queue_size = 10)
         self.service_timeout = 30 
-            rospy.loginfo("waiting for ROS services::base state")
+        rospy.loginfo("waiting for ROS services::base state")
 
     def update_local_position(self, data):
         ''' update the quadrotor local position ''' 
@@ -103,7 +86,7 @@ class State(object):
     def run(self):
         self.cmd_vel.publish(self.msg)
 
-
+'''
 # Flying State
 # Mode: Follow
 # Conditions: Motors on with operator control
@@ -168,7 +151,8 @@ class FlyingState(State):
     super(FlyingState, self).run()
 
 
-
+'''
+'''
 # Grounded State
 # Mode: Follow, Manual
 # Conditions: Motors off
@@ -186,6 +170,7 @@ class GroundedState(State):
             self.change_state.publish(self.header,'FlyingState')
         else:
             pass
+'''
 
 class GroundedState(State):
     def __init__(self):
@@ -198,9 +183,9 @@ class GroundedState(State):
         if not mode.mode_sent: 
             rospy.logerr("failed to send mode command")
 
-    def is_transition_allowed(self,new_state):
-        return new_state in ['ArmingState']###wh
-        return new_state not in ['Flying']####bl
+    #def is_transition_allowed(self,new_state):
+        #return new_state in ['ArmingState']###wh
+        #return new_state not in ['Flying']####bl
 
 
 
