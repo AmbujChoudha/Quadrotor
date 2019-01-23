@@ -94,46 +94,6 @@ class State(object):
         self.z = self.current_pose.pose.position.z 
 
 
-   ''' def update_operation_mode(self, data):
-        """Handles changes in operation mode on the operator interface
-
-        Args:
-            data: A std_msgs/String message.
-                data.data must be 'manual' or 'auto'
-        """
-        if data.data == 'manual':
-            self.next('manual')
-        elif data.data == 'auto':
-            self.next('auto')
-        else:
-            rospy.logwarn("Unknown mode " + data.data)'''
-
-   ''' def update_alert(self, data):
-        """Handles alerts given by the bebop. 
-        
-        Args:
-            data: An Alert State Changed message.
-        """
-        if data.percentage < 15 :
-            self.next('low battery')  ######??????????????????
-        else:
-            rospy.logwarn("Other warning: " + str(data.state))'''
-
-   ''' def update_flying(self, data):
-        """Handles alerts about the Flying State changing
-
-        Alerts the states as to when the Bebop if flying and when it has landed.
-
-        Args:
-            data: A FlyingState message from the bebop.
-        """
-        if data.state == data.state_landed:
-            self.next("grounded")
-        elif data.state == data.state_hovering or data.state == data.state_flying:
-            self.next("flying")
-        elif data.state == data.state_emergency_landing:
-            rospy.logwarn("Emergency Landing State Entered")'''
-
     def state_callback (self, state_data):
         """ updating the current state """ 
         global current_state 
