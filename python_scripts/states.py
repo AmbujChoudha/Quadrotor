@@ -52,7 +52,8 @@ class State(object):
         Subscribes to operation_mode, FlyingStateChanged, and AlertStateChanged
         Sets the header's frame_id to the class name
         """
-          
+        
+        self.flag_add_state=True  
         self.cmd_pub = rospy.Publisher('/mavros/setpoint_velocity/cmd_vel', TwistStamped, queue_size = 1)
         #self.msg = Twist()
         self.msg = TwistStamped()
@@ -183,9 +184,9 @@ class GroundedState(State):
         if not mode.mode_sent: 
             rospy.logerr("failed to send mode command")
 
-    #def is_transition_allowed(self,new_state):
-        #return new_state in ['ArmingState']###wh
-        #return new_state not in ['Flying']####bl
+    def is_transition_allowed(self,new_state):
+        return new_state in ['ArmingState']###wh
+        return new_state not in ['Flying']####bl
 
 
 

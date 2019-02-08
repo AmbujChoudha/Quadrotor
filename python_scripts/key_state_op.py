@@ -40,7 +40,7 @@ class Key_State_Op():
 			x = raw_input("Enter your input: ")
 			print "|",x,"|"
 			if x=='A':
-				self.publish("Arming")
+				self.publish("ArmingState")
 			if x=='E':
 				break
 

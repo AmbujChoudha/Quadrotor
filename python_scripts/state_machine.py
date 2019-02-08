@@ -8,7 +8,7 @@ Implementing an Inversion of Control structure
 To add functionality please add a new state to states.py and modify state change conditions.
 """
 import rospy
-import states
+import states as states_module
 import inspect
 #from bebop_follow.msg import ChangeState
 from mavros_msgs.msg import State
@@ -32,16 +32,16 @@ class StateMachine():
         Publishes to cmd_vel_topic and subscribes to change_state
         """
         rospy.init_node('state_machine')
-        self.states = {}
+        self.states = {}  #state is a dictionary mapping state names to state objects
         self.current_state = ''
         self.cmd_vel_topic = rospy.Publisher("cmd_vel_topic", String, queue_size=1)
         self.change_state_topic = rospy.Subscriber('state_machine/command', String, self._change_state_wrapper)
-        for state in inspect.getmembers(states,inspect.isclass):                  ##getmembers() function retrieves the members of an object such as a class or module
-            if inspect.getmodule(state[1]) == states:                             ##Return the name of the module named by the file path
+        for state in inspect.getmembers(states_module,inspect.isclass):                  ##getmembers() function retrieves the members of an object such as a class or module
+            if inspect.getmodule(state[1]) == states_module:                             ##state[1] returns the class object of the module named by the file path. This should avoid trying to add classes from nested modules.
                 self._add_state(state[1])
         self.change_state('GroundedState', '')
 
-    def _add_state(self, new_state):
+    def _add_state(self, new_state_class):
         """Adds a state to the dictionary
 
         The string name of the state is used as the key for the dictionary and the value is an instance of the state
@@ -50,18 +50,14 @@ class StateMachine():
         Args:
             new_state: A string of the class name for the particular state or a class that extends State
         """
-        if type(new_state) == type:             ##?????????????????????
-            new_state = new_state.__name__      ##??????????????/
-        if not new_state in self.states:
-            new_state_instance = getattr(states, new_state)
-            try:
-                if callable(new_state_instance.next):   
-                    self.states[new_state] = new_state_instance()
+        if not new_state_class.__name__ in self.states: # check if there is an object of the same class we are trying to add.
+            if hasattr(new_state_class, 'flag_add_state'):
+                new_state_object=new_state_class()
+                if new_state_object.flag_add_state   
+                    self.states[new_state_class.__name__] = new_state_object
                     self.cmd_vel_topic.publish("cmd_vel_" + new_state) ##publishing the new state ................. who is subscribing ??
-                else:
-                    raise NotImplementedError("method next is not callable")
-            except:
-                rospy.logwarn(new_state + " not added")
+            else:
+                rospy.logwarn(new_state_class.__name__ + " not added")
 
     def change_state(self, new_state, caller_state):
         """Changes the state to new_state
