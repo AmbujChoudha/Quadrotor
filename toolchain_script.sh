@@ -40,9 +40,6 @@ sudo apt-get install ros-kinetic-mavros ros-kinetic-mavros-extras
 #install GeographicLib
 wget https://raw.githubusercontent.com/mavlink/mavros/master/mavros/scripts/install_geographiclib_datasets.sh
 sudo ./install_geographiclib_datasets.sh
-<<<<<<< HEAD
-=======
-
 
 sleep 5 
 sudo apt-get update 
