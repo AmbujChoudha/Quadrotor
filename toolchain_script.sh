@@ -1,5 +1,5 @@
 #!/bin/bash 
-
+#--Robotics Lab --Boston University
 #This script will install all PX4 targets for simulation, ROS, Gazebo
 #to install ROS, visit http://wiki.ros.org/Documentation
 
@@ -29,7 +29,7 @@ wget http://www.eprosima.com/index.php/component/ars/repository/eprosima-fast-rt
 tar -xzf eprosima_fastrtps-1-5-0-linux.tar.gz eProsima_FastRTPS-1.5.0-Linux/
 tar -xzf eprosima_fastrtps-1-5-0-linux.tar.gz requiredcomponents
 tar -xzf requiredcomponents/eProsima_FastCDR-1.0.7-Linux.tar.gz
-
+#j<number_of_cpu_cores_in_your_system> to speed up the compilation of the libraries
 (cd eProsima_FastCDR-1.0.7-Linux && ./configure --libdir=/usr/lib && make -j2 && sudo make install)
 (cd eProsima_FastRTPS-1.5.0-Linux && ./configure --libdir=/usr/lib && make -j2 && sudo make install)
 rm -rf requiredcomponents eprosima_fastrtps-1-5-0-linux.tar.gz
