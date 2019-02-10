@@ -47,4 +47,4 @@ sudo ./install_geographiclib_datasets.sh
 sleep 5 
 sudo apt-get update 
 sudo apt-get upgrade
->>>>>>> 84868c9ca8811a863220197b211fe7f32b3cb38c
+
