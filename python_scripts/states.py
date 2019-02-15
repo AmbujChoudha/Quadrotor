@@ -15,7 +15,7 @@ Each state holds a controller of their own and publishes commands to the cmd_pub
 To be used in conjucntion with operator.py and potential_path.py
 """
 import rospy
-from mavros_msgs.msg import State
+import mavros_msgs.msg
 import math
 import numpy as np
 from threading import Timer
@@ -53,14 +53,14 @@ class State(object):
         Sets the header's frame_id to the class name
         """
         
-        self.flag_add_state=True  
+        self.flag_add_state=False  
         self.cmd_pub = rospy.Publisher('/mavros/setpoint_velocity/cmd_vel', TwistStamped, queue_size = 1)
         #self.msg = Twist()
         self.msg = TwistStamped()
         self.current_pose = PoseStamped()
-        self.current_state = State()
+        self.current_state = mavros_msgs.msg.State()
         self.local_position_subscribe = rospy.Subscriber('/mavros/local_position/pose', PoseStamped, self.update_local_position)
-        self.my_state = rospy.Subscriber('/mavros/state',State,self.state_callback)
+        self.my_state = rospy.Subscriber('/mavros/state',mavros_msgs.msg.State,self.state_callback)
         #rospy.Subscriber("bebop/states/ardron3/PilotingState/AlertStateChanged", Ardrone3PilotingStateAlertStateChanged, self.update_alert)
         #rospy.Subscriber("/mavros/battery", BatteryState, self.update_alert)
 
@@ -175,8 +175,11 @@ class GroundedState(State):
 
 class GroundedState(State):
     def __init__(self):
-        super(GroundedState,self).__init__ 
+        State.__init__(self) 
+        self.flag_add_state=True
+
     def run(self):
+        #import ipdb; ipdb.set_trace()
         while self.current_state != "AUTO.LAND": 
             set_mode = rospy.ServiceProxy('/mavros/set_mode', SetMode)
             mode = set_mode (custom = 'AUTO.LAND')
@@ -194,6 +197,7 @@ class ArmingState (State):
     ''' This state will arm the quadrotor ''' 
     def __init__(self):
         super(ArmingState, self).__init__()
+        self.flag_add_state=True  
 
     def run(self):
         ''' Ensure all services are running, and switch Quad to offboard '''

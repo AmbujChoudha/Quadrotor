@@ -50,14 +50,17 @@ class StateMachine():
         Args:
             new_state: A string of the class name for the particular state or a class that extends State
         """
-        if not new_state_class.__name__ in self.states: # check if there is an object of the same class we are trying to add.
-            if hasattr(new_state_class, 'flag_add_state'):
-                new_state_object=new_state_class()
-                if new_state_object.flag_add_state   
-                    self.states[new_state_class.__name__] = new_state_object
-                    self.cmd_vel_topic.publish("cmd_vel_" + new_state) ##publishing the new state ................. who is subscribing ??
+        #import ipdb; ipdb.set_trace()
+        # check if this class has a name (i.e., is not a fundamental type), and if there is an object of the same class we are trying to add.
+        if hasattr(new_state_class,'__name__') and not new_state_class.__name__ in self.states: 
+            new_state_name=new_state_class.__name__
+            new_state_object=new_state_class()
+            if hasattr(new_state_object, 'flag_add_state') and new_state_object.flag_add_state:
+                self.states[new_state_name] = new_state_object
+                self.cmd_vel_topic.publish("cmd_vel_" + new_state_name) ##publishing the new state ................. who is subscribing ??
+                rospy.loginfo(new_state_name + " added")
             else:
-                rospy.logwarn(new_state_class.__name__ + " not added")
+                rospy.logwarn(new_state_name + " not added")
 
     def change_state(self, new_state, caller_state):
         """Changes the state to new_state
