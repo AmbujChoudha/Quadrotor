@@ -177,13 +177,14 @@ class GroundedState(State):
     def __init__(self):
         State.__init__(self) 
         self.flag_add_state=True
-
+	#self.service_timeout = 30
+        #rospy.loginfo("waiting for ROS services")
     def run(self):
         #import ipdb; ipdb.set_trace()
         while self.current_state != "AUTO.LAND": 
             set_mode = rospy.ServiceProxy('/mavros/set_mode', SetMode)
-            mode = set_mode (custom = 'AUTO.LAND')
-            rospy.wait_for_services('mavros/set_mode', service_timeout)
+            mode = set_mode (custom_mode = 'AUTO.LAND')
+            rospy.wait_for_service('mavros/set_mode',self.service_timeout)
         if not mode.mode_sent: 
             rospy.logerr("failed to send mode command")
 

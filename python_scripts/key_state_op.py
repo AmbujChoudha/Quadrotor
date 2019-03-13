@@ -1,4 +1,4 @@
-
+state_machine.py
 import rospy
 import math
 import numpy as np
@@ -17,14 +17,14 @@ from std_msgs.msg import String
 
 class Key_State_Op():
 	def menu(self):
-		print "Press"
-		print "A: to set mode to ARM the drone"
-		print "S: to set mode to STABILIZE"
-		print "D: to set mode to DISARM the drone"
-	    	print "T: to set mode to TAKEOFF"
-	    	print "L: to set mode to LAND"
-	    	print "LO: print GPS coordinates"
-		print "E: to exit"
+		print ("Press")
+		print ("A: to set mode to ARM the drone")
+		print ("S: to set mode to STABILIZE")
+		print ("D: to set mode to DISARM the drone")
+        print ("T: to set mode to TAKEOFF")
+        print ("L: to set mode to LAND")
+        print ("LO: print GPS coordinates")
+		print ("E: to exit")
 
 	def publish(self, str):
 		print 'state_machine/command <- ', str

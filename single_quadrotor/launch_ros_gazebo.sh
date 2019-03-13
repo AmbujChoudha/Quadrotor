@@ -2,7 +2,7 @@
 
 source $HOME/.bashrc
 
-firm=$HOME/src/Firmware
+firm=$HOME/Firmware
 
 cd $firm
 source $firm/Tools/setup_gazebo.bash $(pwd) $(pwd)/build/posix_sitl_default

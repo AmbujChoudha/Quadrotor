@@ -2,7 +2,7 @@
 
 source $HOME/.bashrc
 
-firm=$HOME/src/Firmware
+firm=$HOME/Firmware
 
 cd $firm
 

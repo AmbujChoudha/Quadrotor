@@ -35,21 +35,14 @@ class StateMachine():
         self.states = {}  #state is a dictionary mapping state names to state objects
         self.current_state = ''
         self.cmd_vel_topic = rospy.Publisher("cmd_vel_topic", String, queue_size=1)
-        self.change_state_topic = rospy.Subscriber('state_machine/command', String, self._change_state_wrapper)
+        self.change_state_topic = rospy.Subscriber('state_machine/command', String, self._change_state_callback)
         for state in inspect.getmembers(states_module,inspect.isclass):                  ##getmembers() function retrieves the members of an object such as a class or module
             if inspect.getmodule(state[1]) == states_module:                             ##state[1] returns the class object of the module named by the file path. This should avoid trying to add classes from nested modules.
                 self._add_state(state[1])
         self.change_state('GroundedState', '')
+       
 
     def _add_state(self, new_state_class):
-        """Adds a state to the dictionary
-
-        The string name of the state is used as the key for the dictionary and the value is an instance of the state
-        Ensures that the class has a callable next method. If there is one, the program assumes that the class is properly implemented and not an abstract state.
-
-        Args:
-            new_state: A string of the class name for the particular state or a class that extends State
-        """
         #import ipdb; ipdb.set_trace()
         # check if this class has a name (i.e., is not a fundamental type), and if there is an object of the same class we are trying to add.
         if hasattr(new_state_class,'__name__') and not new_state_class.__name__ in self.states: 
@@ -61,19 +54,8 @@ class StateMachine():
                 rospy.loginfo(new_state_name + " added")
             else:
                 rospy.logwarn(new_state_name + " not added")
-
+           
     def change_state(self, new_state, caller_state):
-        """Changes the state to new_state
-
-        Only works if caller_state is the current active state.
-        If the new_state is not currently in the states dictionary, adds the new_state to the dictionary.
-        Sets the new_state to be the active state and allows cmd_pub_m to read from it.
-
-        Args:
-            new_state: A string with the name of the class of the desired new state.
-                Or a derivative of the State class.
-            caller_state: A string with the name of the class of the state that called the change_state function.
-        """
         if caller_state == self.current_state or self.current_state == '':
             self._add_state(new_state)
             if type(new_state) == str:
@@ -82,17 +64,15 @@ class StateMachine():
             else:
                 self.current_state = new_state.__name__   ###???????????
             #TODO make sure this is the right topic for publishing manual control.
-            self.cmd_vel_topic.publish("cmd_vel_" + new_state)
+            self.cmd_vel_topic.publish("cmd_vel_" + new_state) 
 
-    def _change_state_wrapper(self, data):
-        """A wrapper method for change_state
-
-        Converts ChangeState message into a format that change_state() can read, separating the new_state and the caller state
-
-        Args:
-            data: A ChangeState message.
-        """
-        self.change_state(data.state, data.header.frame_id)
+        
+    def _change_state_callback(self, data):
+        
+       
+        self.change_state(data, data.header.frame_id)
+       
+	
 
     def run(self):
         """Polls the current state every 100ms to run"""
