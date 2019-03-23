@@ -204,10 +204,10 @@ class ArmingState (State):
         while self.current_state != "OFFBOARD" or not self.current_state.armed: 
             arm = rospy.ServiceProxy('/mavros/cmd/arming', mavros_msgs.srv.CommandBool) 
             arm(True)
-            set_mode = rospy.ServiceProxy('/mavros/set_mode', SetMode)
-            mode = set_mode(custom_mode = 'OFFBOARD')
-            rospy.wait_for_services('mavros/set_mode', self.service_timeout)
+            #set_mode = rospy.ServiceProxy('/mavros/set_mode', SetMode)
+            #mode = set_mode(custom_mode = 'OFFBOARD')
+            #rospy.wait_for_services('mavros/set_mode', self.service_timeout)
         rospy.loginfo("ROS services are up::arming")
-        if not mode.mode_sent: 
-            rospy.logerr("falied to send mode command")
+        #if not mode.mode_sent: 
+         #   rospy.logerr("falied to send mode command")
 

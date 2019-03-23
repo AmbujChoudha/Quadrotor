@@ -1,6 +1,1 @@
-
-"use strict";
-
-module.exports = {
-  msg: require('./msg/_index.js'),
-};
+/home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/share/gennodejs/ros/quadrotor_state_machine/_index.js

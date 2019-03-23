@@ -1,1 +1,1 @@
-from ._StateCommand import *
+/home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/lib/python2.7/dist-packages/quadrotor_state_machine/msg/__init__.py

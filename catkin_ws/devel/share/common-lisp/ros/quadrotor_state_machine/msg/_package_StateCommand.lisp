@@ -1,6 +1,1 @@
-(cl:in-package quadrotor_state_machine-msg)
-(cl:export '(NEXT-VAL
-          NEXT
-          CURRENT-VAL
-          CURRENT
-))
+/home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/share/common-lisp/ros/quadrotor_state_machine/msg/_package_StateCommand.lisp

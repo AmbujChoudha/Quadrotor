@@ -43,47 +43,47 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ubuntu/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/ubuntu/Quadrotor/catkin_ws/src/quadrotor_state_machine
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ubuntu/catkin_ws/build
+CMAKE_BINARY_DIR = /home/ubuntu/Quadrotor/catkin_ws/build/quadrotor_state_machine
 
 # Utility rule file for quadrotor_state_machine_generate_messages_py.
 
 # Include the progress variables for this target.
-include quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/progress.make
+include CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/progress.make
 
-quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py: /home/ubuntu/catkin_ws/devel/lib/python2.7/dist-packages/quadrotor_state_machine/msg/_StateCommand.py
-quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py: /home/ubuntu/catkin_ws/devel/lib/python2.7/dist-packages/quadrotor_state_machine/msg/__init__.py
+CMakeFiles/quadrotor_state_machine_generate_messages_py: /home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/lib/python2.7/dist-packages/quadrotor_state_machine/msg/_StateCommand.py
+CMakeFiles/quadrotor_state_machine_generate_messages_py: /home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/lib/python2.7/dist-packages/quadrotor_state_machine/msg/__init__.py
 
 
-/home/ubuntu/catkin_ws/devel/lib/python2.7/dist-packages/quadrotor_state_machine/msg/_StateCommand.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
-/home/ubuntu/catkin_ws/devel/lib/python2.7/dist-packages/quadrotor_state_machine/msg/_StateCommand.py: /home/ubuntu/catkin_ws/src/quadrotor_state_machine/msg/StateCommand.msg
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG quadrotor_state_machine/StateCommand"
-	cd /home/ubuntu/catkin_ws/build/quadrotor_state_machine && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/ubuntu/catkin_ws/src/quadrotor_state_machine/msg/StateCommand.msg -Iquadrotor_state_machine:/home/ubuntu/catkin_ws/src/quadrotor_state_machine/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -p quadrotor_state_machine -o /home/ubuntu/catkin_ws/devel/lib/python2.7/dist-packages/quadrotor_state_machine/msg
+/home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/lib/python2.7/dist-packages/quadrotor_state_machine/msg/_StateCommand.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
+/home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/lib/python2.7/dist-packages/quadrotor_state_machine/msg/_StateCommand.py: /home/ubuntu/Quadrotor/catkin_ws/src/quadrotor_state_machine/msg/StateCommand.msg
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/Quadrotor/catkin_ws/build/quadrotor_state_machine/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Generating Python from MSG quadrotor_state_machine/StateCommand"
+	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py /home/ubuntu/Quadrotor/catkin_ws/src/quadrotor_state_machine/msg/StateCommand.msg -Iquadrotor_state_machine:/home/ubuntu/Quadrotor/catkin_ws/src/quadrotor_state_machine/msg -Istd_msgs:/opt/ros/kinetic/share/std_msgs/cmake/../msg -p quadrotor_state_machine -o /home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/lib/python2.7/dist-packages/quadrotor_state_machine/msg
 
-/home/ubuntu/catkin_ws/devel/lib/python2.7/dist-packages/quadrotor_state_machine/msg/__init__.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
-/home/ubuntu/catkin_ws/devel/lib/python2.7/dist-packages/quadrotor_state_machine/msg/__init__.py: /home/ubuntu/catkin_ws/devel/lib/python2.7/dist-packages/quadrotor_state_machine/msg/_StateCommand.py
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/catkin_ws/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python msg __init__.py for quadrotor_state_machine"
-	cd /home/ubuntu/catkin_ws/build/quadrotor_state_machine && ../catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/ubuntu/catkin_ws/devel/lib/python2.7/dist-packages/quadrotor_state_machine/msg --initpy
+/home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/lib/python2.7/dist-packages/quadrotor_state_machine/msg/__init__.py: /opt/ros/kinetic/lib/genpy/genmsg_py.py
+/home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/lib/python2.7/dist-packages/quadrotor_state_machine/msg/__init__.py: /home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/lib/python2.7/dist-packages/quadrotor_state_machine/msg/_StateCommand.py
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/ubuntu/Quadrotor/catkin_ws/build/quadrotor_state_machine/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Generating Python msg __init__.py for quadrotor_state_machine"
+	catkin_generated/env_cached.sh /usr/bin/python /opt/ros/kinetic/share/genpy/cmake/../../../lib/genpy/genmsg_py.py -o /home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/lib/python2.7/dist-packages/quadrotor_state_machine/msg --initpy
 
-quadrotor_state_machine_generate_messages_py: quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py
-quadrotor_state_machine_generate_messages_py: /home/ubuntu/catkin_ws/devel/lib/python2.7/dist-packages/quadrotor_state_machine/msg/_StateCommand.py
-quadrotor_state_machine_generate_messages_py: /home/ubuntu/catkin_ws/devel/lib/python2.7/dist-packages/quadrotor_state_machine/msg/__init__.py
-quadrotor_state_machine_generate_messages_py: quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/build.make
+quadrotor_state_machine_generate_messages_py: CMakeFiles/quadrotor_state_machine_generate_messages_py
+quadrotor_state_machine_generate_messages_py: /home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/lib/python2.7/dist-packages/quadrotor_state_machine/msg/_StateCommand.py
+quadrotor_state_machine_generate_messages_py: /home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/lib/python2.7/dist-packages/quadrotor_state_machine/msg/__init__.py
+quadrotor_state_machine_generate_messages_py: CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/build.make
 
 .PHONY : quadrotor_state_machine_generate_messages_py
 
 # Rule to build all files generated by this target.
-quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/build: quadrotor_state_machine_generate_messages_py
+CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/build: quadrotor_state_machine_generate_messages_py
 
-.PHONY : quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/build
+.PHONY : CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/build
 
-quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/clean:
-	cd /home/ubuntu/catkin_ws/build/quadrotor_state_machine && $(CMAKE_COMMAND) -P CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/cmake_clean.cmake
-.PHONY : quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/clean
+CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/clean:
+	$(CMAKE_COMMAND) -P CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/cmake_clean.cmake
+.PHONY : CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/clean
 
-quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/depend:
-	cd /home/ubuntu/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/catkin_ws/src /home/ubuntu/catkin_ws/src/quadrotor_state_machine /home/ubuntu/catkin_ws/build /home/ubuntu/catkin_ws/build/quadrotor_state_machine /home/ubuntu/catkin_ws/build/quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
-.PHONY : quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/depend
+CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/depend:
+	cd /home/ubuntu/Quadrotor/catkin_ws/build/quadrotor_state_machine && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/ubuntu/Quadrotor/catkin_ws/src/quadrotor_state_machine /home/ubuntu/Quadrotor/catkin_ws/src/quadrotor_state_machine /home/ubuntu/Quadrotor/catkin_ws/build/quadrotor_state_machine /home/ubuntu/Quadrotor/catkin_ws/build/quadrotor_state_machine /home/ubuntu/Quadrotor/catkin_ws/build/quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/DependInfo.cmake --color=$(COLOR)
+.PHONY : CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/depend
 

@@ -1,7 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/quadrotor_state_machine_generate_messages_py"
-  "/home/ubuntu/catkin_ws/devel/lib/python2.7/dist-packages/quadrotor_state_machine/msg/_StateCommand.py"
-  "/home/ubuntu/catkin_ws/devel/lib/python2.7/dist-packages/quadrotor_state_machine/msg/__init__.py"
+  "/home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/lib/python2.7/dist-packages/quadrotor_state_machine/msg/_StateCommand.py"
+  "/home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/lib/python2.7/dist-packages/quadrotor_state_machine/msg/__init__.py"
 )
 
 # Per-language clean rules from dependency scanning.

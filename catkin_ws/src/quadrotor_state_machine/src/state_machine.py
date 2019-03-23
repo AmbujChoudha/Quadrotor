@@ -64,6 +64,7 @@ class StateMachine():
                 self.current_state = new_state
             else:
                 self.current_state = new_state.__name__   ###???????????
+            #TODO publish current state on a topic on each call to this method
             #TODO make sure this is the right topic for publishing manual control.
             self.cmd_vel_topic.publish("cmd_vel_" + new_state) 
 

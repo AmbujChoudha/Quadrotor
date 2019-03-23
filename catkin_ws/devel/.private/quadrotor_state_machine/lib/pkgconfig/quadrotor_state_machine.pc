@@ -1,0 +1,8 @@
+prefix=/home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine
+
+Name: quadrotor_state_machine
+Description: Description of quadrotor_state_machine
+Version: 0.0.0
+Cflags: -I/home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/include
+Libs: -L/home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/lib 
+Requires: rospy std_msgs message_runtime

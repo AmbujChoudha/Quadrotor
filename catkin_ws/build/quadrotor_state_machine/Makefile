@@ -48,10 +48,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/ubuntu/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/ubuntu/Quadrotor/catkin_ws/src/quadrotor_state_machine
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ubuntu/catkin_ws/build
+CMAKE_BINARY_DIR = /home/ubuntu/Quadrotor/catkin_ws/build/quadrotor_state_machine
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -78,16 +78,16 @@ install/fast: preinstall/fast
 	/usr/bin/cmake -P cmake_install.cmake
 .PHONY : install/fast
 
-# Special rule for the target install/strip
-install/strip: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
-	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
-.PHONY : install/strip
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
 
-# Special rule for the target install/strip
-install/strip/fast: install/strip
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
 
-.PHONY : install/strip/fast
+.PHONY : edit_cache/fast
 
 # Special rule for the target install/local
 install/local: preinstall
@@ -100,28 +100,6 @@ install/local/fast: install/local
 
 .PHONY : install/local/fast
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
-
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -133,16 +111,38 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: install/strip
+
+.PHONY : install/strip/fast
+
 # The main all target
 all: cmake_check_build_system
-	cd /home/ubuntu/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/catkin_ws/build/CMakeFiles /home/ubuntu/catkin_ws/build/quadrotor_state_machine/CMakeFiles/progress.marks
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/catkin_ws/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/Quadrotor/catkin_ws/build/quadrotor_state_machine/CMakeFiles /home/ubuntu/Quadrotor/catkin_ws/build/quadrotor_state_machine/CMakeFiles/progress.marks
+	$(MAKE) -f CMakeFiles/Makefile2 all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ubuntu/Quadrotor/catkin_ws/build/quadrotor_state_machine/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/clean
+	$(MAKE) -f CMakeFiles/Makefile2 clean
 .PHONY : clean
 
 # The main clean target
@@ -152,273 +152,356 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/preinstall
+	$(MAKE) -f CMakeFiles/Makefile2 preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/preinstall
+	$(MAKE) -f CMakeFiles/Makefile2 preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/ubuntu/catkin_ws/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
-# Convenience name for target.
-quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_eus.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-.PHONY : quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
+#=============================================================================
+# Target rules for targets named std_msgs_generate_messages_lisp
 
-# Convenience name for target.
-std_msgs_generate_messages_eus: quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_eus.dir/rule
-
-.PHONY : std_msgs_generate_messages_eus
-
-# fast build rule for target.
-std_msgs_generate_messages_eus/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_eus.dir/build.make quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_eus.dir/build
-.PHONY : std_msgs_generate_messages_eus/fast
-
-# Convenience name for target.
-quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_gennodejs.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_gennodejs.dir/rule
-.PHONY : quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_gennodejs.dir/rule
-
-# Convenience name for target.
-quadrotor_state_machine_gennodejs: quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_gennodejs.dir/rule
-
-.PHONY : quadrotor_state_machine_gennodejs
-
-# fast build rule for target.
-quadrotor_state_machine_gennodejs/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_gennodejs.dir/build.make quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_gennodejs.dir/build
-.PHONY : quadrotor_state_machine_gennodejs/fast
-
-# Convenience name for target.
-quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_cpp.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_cpp.dir/rule
-.PHONY : quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-quadrotor_state_machine_generate_messages_cpp: quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_cpp.dir/rule
-
-.PHONY : quadrotor_state_machine_generate_messages_cpp
-
-# fast build rule for target.
-quadrotor_state_machine_generate_messages_cpp/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_cpp.dir/build.make quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_cpp.dir/build
-.PHONY : quadrotor_state_machine_generate_messages_cpp/fast
-
-# Convenience name for target.
-quadrotor_state_machine/CMakeFiles/_quadrotor_state_machine_generate_messages_check_deps_StateCommand.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/CMakeFiles/_quadrotor_state_machine_generate_messages_check_deps_StateCommand.dir/rule
-.PHONY : quadrotor_state_machine/CMakeFiles/_quadrotor_state_machine_generate_messages_check_deps_StateCommand.dir/rule
-
-# Convenience name for target.
-_quadrotor_state_machine_generate_messages_check_deps_StateCommand: quadrotor_state_machine/CMakeFiles/_quadrotor_state_machine_generate_messages_check_deps_StateCommand.dir/rule
-
-.PHONY : _quadrotor_state_machine_generate_messages_check_deps_StateCommand
-
-# fast build rule for target.
-_quadrotor_state_machine_generate_messages_check_deps_StateCommand/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f quadrotor_state_machine/CMakeFiles/_quadrotor_state_machine_generate_messages_check_deps_StateCommand.dir/build.make quadrotor_state_machine/CMakeFiles/_quadrotor_state_machine_generate_messages_check_deps_StateCommand.dir/build
-.PHONY : _quadrotor_state_machine_generate_messages_check_deps_StateCommand/fast
-
-# Convenience name for target.
-quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_gencpp.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_gencpp.dir/rule
-.PHONY : quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_gencpp.dir/rule
-
-# Convenience name for target.
-quadrotor_state_machine_gencpp: quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_gencpp.dir/rule
-
-.PHONY : quadrotor_state_machine_gencpp
-
-# fast build rule for target.
-quadrotor_state_machine_gencpp/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_gencpp.dir/build.make quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_gencpp.dir/build
-.PHONY : quadrotor_state_machine_gencpp/fast
-
-# Convenience name for target.
-quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages.dir/rule
-.PHONY : quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages.dir/rule
-
-# Convenience name for target.
-quadrotor_state_machine_generate_messages: quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages.dir/rule
-
-.PHONY : quadrotor_state_machine_generate_messages
-
-# fast build rule for target.
-quadrotor_state_machine_generate_messages/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages.dir/build.make quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages.dir/build
-.PHONY : quadrotor_state_machine_generate_messages/fast
-
-# Convenience name for target.
-quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_lisp.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_lisp.dir/rule
-.PHONY : quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-quadrotor_state_machine_generate_messages_lisp: quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_lisp.dir/rule
-
-.PHONY : quadrotor_state_machine_generate_messages_lisp
-
-# fast build rule for target.
-quadrotor_state_machine_generate_messages_lisp/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_lisp.dir/build.make quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_lisp.dir/build
-.PHONY : quadrotor_state_machine_generate_messages_lisp/fast
-
-# Convenience name for target.
-quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-.PHONY : quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_lisp: quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
-
+# Build rule for target.
+std_msgs_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_lisp
 .PHONY : std_msgs_generate_messages_lisp
 
 # fast build rule for target.
 std_msgs_generate_messages_lisp/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
+	$(MAKE) -f CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make CMakeFiles/std_msgs_generate_messages_lisp.dir/build
 .PHONY : std_msgs_generate_messages_lisp/fast
 
-# Convenience name for target.
-quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_py.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_py.dir/rule
-.PHONY : quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_py.dir/rule
+#=============================================================================
+# Target rules for targets named download_extra_data
 
-# Convenience name for target.
-std_msgs_generate_messages_py: quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_py.dir/rule
-
-.PHONY : std_msgs_generate_messages_py
+# Build rule for target.
+download_extra_data: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 download_extra_data
+.PHONY : download_extra_data
 
 # fast build rule for target.
-std_msgs_generate_messages_py/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_py.dir/build.make quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_py.dir/build
-.PHONY : std_msgs_generate_messages_py/fast
+download_extra_data/fast:
+	$(MAKE) -f CMakeFiles/download_extra_data.dir/build.make CMakeFiles/download_extra_data.dir/build
+.PHONY : download_extra_data/fast
 
-# Convenience name for target.
-quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/rule
-.PHONY : quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/rule
+#=============================================================================
+# Target rules for targets named std_msgs_generate_messages_eus
 
-# Convenience name for target.
-quadrotor_state_machine_generate_messages_py: quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/rule
-
-.PHONY : quadrotor_state_machine_generate_messages_py
+# Build rule for target.
+std_msgs_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_eus
+.PHONY : std_msgs_generate_messages_eus
 
 # fast build rule for target.
-quadrotor_state_machine_generate_messages_py/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/build.make quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/build
-.PHONY : quadrotor_state_machine_generate_messages_py/fast
+std_msgs_generate_messages_eus/fast:
+	$(MAKE) -f CMakeFiles/std_msgs_generate_messages_eus.dir/build.make CMakeFiles/std_msgs_generate_messages_eus.dir/build
+.PHONY : std_msgs_generate_messages_eus/fast
 
-# Convenience name for target.
-quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
-.PHONY : quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
+#=============================================================================
+# Target rules for targets named quadrotor_state_machine_generate_messages_eus
 
-# Convenience name for target.
-std_msgs_generate_messages_nodejs: quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_nodejs.dir/rule
-
-.PHONY : std_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-std_msgs_generate_messages_nodejs/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_nodejs.dir/build
-.PHONY : std_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_geneus.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_geneus.dir/rule
-.PHONY : quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_geneus.dir/rule
-
-# Convenience name for target.
-quadrotor_state_machine_geneus: quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_geneus.dir/rule
-
-.PHONY : quadrotor_state_machine_geneus
-
-# fast build rule for target.
-quadrotor_state_machine_geneus/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_geneus.dir/build.make quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_geneus.dir/build
-.PHONY : quadrotor_state_machine_geneus/fast
-
-# Convenience name for target.
-quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-.PHONY : quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-std_msgs_generate_messages_cpp: quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
-
-.PHONY : std_msgs_generate_messages_cpp
-
-# fast build rule for target.
-std_msgs_generate_messages_cpp/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make quadrotor_state_machine/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
-.PHONY : std_msgs_generate_messages_cpp/fast
-
-# Convenience name for target.
-quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_genpy.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_genpy.dir/rule
-.PHONY : quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_genpy.dir/rule
-
-# Convenience name for target.
-quadrotor_state_machine_genpy: quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_genpy.dir/rule
-
-.PHONY : quadrotor_state_machine_genpy
-
-# fast build rule for target.
-quadrotor_state_machine_genpy/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_genpy.dir/build.make quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_genpy.dir/build
-.PHONY : quadrotor_state_machine_genpy/fast
-
-# Convenience name for target.
-quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_nodejs.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_nodejs.dir/rule
-.PHONY : quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-quadrotor_state_machine_generate_messages_nodejs: quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_nodejs.dir/rule
-
-.PHONY : quadrotor_state_machine_generate_messages_nodejs
-
-# fast build rule for target.
-quadrotor_state_machine_generate_messages_nodejs/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_nodejs.dir/build.make quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_nodejs.dir/build
-.PHONY : quadrotor_state_machine_generate_messages_nodejs/fast
-
-# Convenience name for target.
-quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_genlisp.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_genlisp.dir/rule
-.PHONY : quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_genlisp.dir/rule
-
-# Convenience name for target.
-quadrotor_state_machine_genlisp: quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_genlisp.dir/rule
-
-.PHONY : quadrotor_state_machine_genlisp
-
-# fast build rule for target.
-quadrotor_state_machine_genlisp/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_genlisp.dir/build.make quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_genlisp.dir/build
-.PHONY : quadrotor_state_machine_genlisp/fast
-
-# Convenience name for target.
-quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_eus.dir/rule:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_eus.dir/rule
-.PHONY : quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-quadrotor_state_machine_generate_messages_eus: quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_eus.dir/rule
-
+# Build rule for target.
+quadrotor_state_machine_generate_messages_eus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine_generate_messages_eus
 .PHONY : quadrotor_state_machine_generate_messages_eus
 
 # fast build rule for target.
 quadrotor_state_machine_generate_messages_eus/fast:
-	cd /home/ubuntu/catkin_ws/build && $(MAKE) -f quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_eus.dir/build.make quadrotor_state_machine/CMakeFiles/quadrotor_state_machine_generate_messages_eus.dir/build
+	$(MAKE) -f CMakeFiles/quadrotor_state_machine_generate_messages_eus.dir/build.make CMakeFiles/quadrotor_state_machine_generate_messages_eus.dir/build
 .PHONY : quadrotor_state_machine_generate_messages_eus/fast
+
+#=============================================================================
+# Target rules for targets named quadrotor_state_machine_genlisp
+
+# Build rule for target.
+quadrotor_state_machine_genlisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine_genlisp
+.PHONY : quadrotor_state_machine_genlisp
+
+# fast build rule for target.
+quadrotor_state_machine_genlisp/fast:
+	$(MAKE) -f CMakeFiles/quadrotor_state_machine_genlisp.dir/build.make CMakeFiles/quadrotor_state_machine_genlisp.dir/build
+.PHONY : quadrotor_state_machine_genlisp/fast
+
+#=============================================================================
+# Target rules for targets named quadrotor_state_machine_gennodejs
+
+# Build rule for target.
+quadrotor_state_machine_gennodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine_gennodejs
+.PHONY : quadrotor_state_machine_gennodejs
+
+# fast build rule for target.
+quadrotor_state_machine_gennodejs/fast:
+	$(MAKE) -f CMakeFiles/quadrotor_state_machine_gennodejs.dir/build.make CMakeFiles/quadrotor_state_machine_gennodejs.dir/build
+.PHONY : quadrotor_state_machine_gennodejs/fast
+
+#=============================================================================
+# Target rules for targets named _quadrotor_state_machine_generate_messages_check_deps_StateCommand
+
+# Build rule for target.
+_quadrotor_state_machine_generate_messages_check_deps_StateCommand: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 _quadrotor_state_machine_generate_messages_check_deps_StateCommand
+.PHONY : _quadrotor_state_machine_generate_messages_check_deps_StateCommand
+
+# fast build rule for target.
+_quadrotor_state_machine_generate_messages_check_deps_StateCommand/fast:
+	$(MAKE) -f CMakeFiles/_quadrotor_state_machine_generate_messages_check_deps_StateCommand.dir/build.make CMakeFiles/_quadrotor_state_machine_generate_messages_check_deps_StateCommand.dir/build
+.PHONY : _quadrotor_state_machine_generate_messages_check_deps_StateCommand/fast
+
+#=============================================================================
+# Target rules for targets named tests
+
+# Build rule for target.
+tests: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 tests
+.PHONY : tests
+
+# fast build rule for target.
+tests/fast:
+	$(MAKE) -f CMakeFiles/tests.dir/build.make CMakeFiles/tests.dir/build
+.PHONY : tests/fast
+
+#=============================================================================
+# Target rules for targets named std_msgs_generate_messages_py
+
+# Build rule for target.
+std_msgs_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_py
+.PHONY : std_msgs_generate_messages_py
+
+# fast build rule for target.
+std_msgs_generate_messages_py/fast:
+	$(MAKE) -f CMakeFiles/std_msgs_generate_messages_py.dir/build.make CMakeFiles/std_msgs_generate_messages_py.dir/build
+.PHONY : std_msgs_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named quadrotor_state_machine_generate_messages_py
+
+# Build rule for target.
+quadrotor_state_machine_generate_messages_py: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine_generate_messages_py
+.PHONY : quadrotor_state_machine_generate_messages_py
+
+# fast build rule for target.
+quadrotor_state_machine_generate_messages_py/fast:
+	$(MAKE) -f CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/build.make CMakeFiles/quadrotor_state_machine_generate_messages_py.dir/build
+.PHONY : quadrotor_state_machine_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named std_msgs_generate_messages_nodejs
+
+# Build rule for target.
+std_msgs_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_nodejs
+.PHONY : std_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+std_msgs_generate_messages_nodejs/fast:
+	$(MAKE) -f CMakeFiles/std_msgs_generate_messages_nodejs.dir/build.make CMakeFiles/std_msgs_generate_messages_nodejs.dir/build
+.PHONY : std_msgs_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named clean_test_results
+
+# Build rule for target.
+clean_test_results: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 clean_test_results
+.PHONY : clean_test_results
+
+# fast build rule for target.
+clean_test_results/fast:
+	$(MAKE) -f CMakeFiles/clean_test_results.dir/build.make CMakeFiles/clean_test_results.dir/build
+.PHONY : clean_test_results/fast
+
+#=============================================================================
+# Target rules for targets named doxygen
+
+# Build rule for target.
+doxygen: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 doxygen
+.PHONY : doxygen
+
+# fast build rule for target.
+doxygen/fast:
+	$(MAKE) -f CMakeFiles/doxygen.dir/build.make CMakeFiles/doxygen.dir/build
+.PHONY : doxygen/fast
+
+#=============================================================================
+# Target rules for targets named run_tests
+
+# Build rule for target.
+run_tests: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 run_tests
+.PHONY : run_tests
+
+# fast build rule for target.
+run_tests/fast:
+	$(MAKE) -f CMakeFiles/run_tests.dir/build.make CMakeFiles/run_tests.dir/build
+.PHONY : run_tests/fast
+
+#=============================================================================
+# Target rules for targets named quadrotor_state_machine_gencpp
+
+# Build rule for target.
+quadrotor_state_machine_gencpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine_gencpp
+.PHONY : quadrotor_state_machine_gencpp
+
+# fast build rule for target.
+quadrotor_state_machine_gencpp/fast:
+	$(MAKE) -f CMakeFiles/quadrotor_state_machine_gencpp.dir/build.make CMakeFiles/quadrotor_state_machine_gencpp.dir/build
+.PHONY : quadrotor_state_machine_gencpp/fast
+
+#=============================================================================
+# Target rules for targets named quadrotor_state_machine_generate_messages
+
+# Build rule for target.
+quadrotor_state_machine_generate_messages: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine_generate_messages
+.PHONY : quadrotor_state_machine_generate_messages
+
+# fast build rule for target.
+quadrotor_state_machine_generate_messages/fast:
+	$(MAKE) -f CMakeFiles/quadrotor_state_machine_generate_messages.dir/build.make CMakeFiles/quadrotor_state_machine_generate_messages.dir/build
+.PHONY : quadrotor_state_machine_generate_messages/fast
+
+#=============================================================================
+# Target rules for targets named quadrotor_state_machine_generate_messages_lisp
+
+# Build rule for target.
+quadrotor_state_machine_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine_generate_messages_lisp
+.PHONY : quadrotor_state_machine_generate_messages_lisp
+
+# fast build rule for target.
+quadrotor_state_machine_generate_messages_lisp/fast:
+	$(MAKE) -f CMakeFiles/quadrotor_state_machine_generate_messages_lisp.dir/build.make CMakeFiles/quadrotor_state_machine_generate_messages_lisp.dir/build
+.PHONY : quadrotor_state_machine_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named quadrotor_state_machine_generate_messages_cpp
+
+# Build rule for target.
+quadrotor_state_machine_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine_generate_messages_cpp
+.PHONY : quadrotor_state_machine_generate_messages_cpp
+
+# fast build rule for target.
+quadrotor_state_machine_generate_messages_cpp/fast:
+	$(MAKE) -f CMakeFiles/quadrotor_state_machine_generate_messages_cpp.dir/build.make CMakeFiles/quadrotor_state_machine_generate_messages_cpp.dir/build
+.PHONY : quadrotor_state_machine_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named quadrotor_state_machine_geneus
+
+# Build rule for target.
+quadrotor_state_machine_geneus: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine_geneus
+.PHONY : quadrotor_state_machine_geneus
+
+# fast build rule for target.
+quadrotor_state_machine_geneus/fast:
+	$(MAKE) -f CMakeFiles/quadrotor_state_machine_geneus.dir/build.make CMakeFiles/quadrotor_state_machine_geneus.dir/build
+.PHONY : quadrotor_state_machine_geneus/fast
+
+#=============================================================================
+# Target rules for targets named quadrotor_state_machine_generate_messages_nodejs
+
+# Build rule for target.
+quadrotor_state_machine_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine_generate_messages_nodejs
+.PHONY : quadrotor_state_machine_generate_messages_nodejs
+
+# fast build rule for target.
+quadrotor_state_machine_generate_messages_nodejs/fast:
+	$(MAKE) -f CMakeFiles/quadrotor_state_machine_generate_messages_nodejs.dir/build.make CMakeFiles/quadrotor_state_machine_generate_messages_nodejs.dir/build
+.PHONY : quadrotor_state_machine_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named std_msgs_generate_messages_cpp
+
+# Build rule for target.
+std_msgs_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 std_msgs_generate_messages_cpp
+.PHONY : std_msgs_generate_messages_cpp
+
+# fast build rule for target.
+std_msgs_generate_messages_cpp/fast:
+	$(MAKE) -f CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make CMakeFiles/std_msgs_generate_messages_cpp.dir/build
+.PHONY : std_msgs_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named quadrotor_state_machine_genpy
+
+# Build rule for target.
+quadrotor_state_machine_genpy: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 quadrotor_state_machine_genpy
+.PHONY : quadrotor_state_machine_genpy
+
+# fast build rule for target.
+quadrotor_state_machine_genpy/fast:
+	$(MAKE) -f CMakeFiles/quadrotor_state_machine_genpy.dir/build.make CMakeFiles/quadrotor_state_machine_genpy.dir/build
+.PHONY : quadrotor_state_machine_genpy/fast
+
+#=============================================================================
+# Target rules for targets named gmock
+
+# Build rule for target.
+gmock: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gmock
+.PHONY : gmock
+
+# fast build rule for target.
+gmock/fast:
+	$(MAKE) -f gtest/CMakeFiles/gmock.dir/build.make gtest/CMakeFiles/gmock.dir/build
+.PHONY : gmock/fast
+
+#=============================================================================
+# Target rules for targets named gmock_main
+
+# Build rule for target.
+gmock_main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gmock_main
+.PHONY : gmock_main
+
+# fast build rule for target.
+gmock_main/fast:
+	$(MAKE) -f gtest/CMakeFiles/gmock_main.dir/build.make gtest/CMakeFiles/gmock_main.dir/build
+.PHONY : gmock_main/fast
+
+#=============================================================================
+# Target rules for targets named gtest
+
+# Build rule for target.
+gtest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gtest
+.PHONY : gtest
+
+# fast build rule for target.
+gtest/fast:
+	$(MAKE) -f gtest/gtest/CMakeFiles/gtest.dir/build.make gtest/gtest/CMakeFiles/gtest.dir/build
+.PHONY : gtest/fast
+
+#=============================================================================
+# Target rules for targets named gtest_main
+
+# Build rule for target.
+gtest_main: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 gtest_main
+.PHONY : gtest_main
+
+# fast build rule for target.
+gtest_main/fast:
+	$(MAKE) -f gtest/gtest/CMakeFiles/gtest_main.dir/build.make gtest/gtest/CMakeFiles/gtest_main.dir/build
+.PHONY : gtest_main/fast
 
 # Help Target
 help:
@@ -428,28 +511,37 @@ help:
 	@echo "... depend"
 	@echo "... list_install_components"
 	@echo "... install"
-	@echo "... std_msgs_generate_messages_eus"
-	@echo "... quadrotor_state_machine_gennodejs"
-	@echo "... quadrotor_state_machine_generate_messages_cpp"
-	@echo "... _quadrotor_state_machine_generate_messages_check_deps_StateCommand"
-	@echo "... quadrotor_state_machine_gencpp"
-	@echo "... quadrotor_state_machine_generate_messages"
-	@echo "... quadrotor_state_machine_generate_messages_lisp"
+	@echo "... edit_cache"
+	@echo "... install/local"
 	@echo "... std_msgs_generate_messages_lisp"
+	@echo "... download_extra_data"
+	@echo "... std_msgs_generate_messages_eus"
+	@echo "... rebuild_cache"
+	@echo "... quadrotor_state_machine_generate_messages_eus"
+	@echo "... test"
+	@echo "... quadrotor_state_machine_genlisp"
+	@echo "... quadrotor_state_machine_gennodejs"
+	@echo "... _quadrotor_state_machine_generate_messages_check_deps_StateCommand"
+	@echo "... tests"
 	@echo "... std_msgs_generate_messages_py"
 	@echo "... quadrotor_state_machine_generate_messages_py"
 	@echo "... std_msgs_generate_messages_nodejs"
+	@echo "... clean_test_results"
+	@echo "... doxygen"
+	@echo "... run_tests"
+	@echo "... quadrotor_state_machine_gencpp"
+	@echo "... quadrotor_state_machine_generate_messages"
+	@echo "... quadrotor_state_machine_generate_messages_lisp"
+	@echo "... quadrotor_state_machine_generate_messages_cpp"
 	@echo "... quadrotor_state_machine_geneus"
+	@echo "... install/strip"
+	@echo "... quadrotor_state_machine_generate_messages_nodejs"
 	@echo "... std_msgs_generate_messages_cpp"
 	@echo "... quadrotor_state_machine_genpy"
-	@echo "... quadrotor_state_machine_generate_messages_nodejs"
-	@echo "... install/strip"
-	@echo "... install/local"
-	@echo "... quadrotor_state_machine_genlisp"
-	@echo "... test"
-	@echo "... edit_cache"
-	@echo "... quadrotor_state_machine_generate_messages_eus"
-	@echo "... rebuild_cache"
+	@echo "... gmock"
+	@echo "... gmock_main"
+	@echo "... gtest"
+	@echo "... gtest_main"
 .PHONY : help
 
 
@@ -461,6 +553,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/ubuntu/catkin_ws/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	$(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

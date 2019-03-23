@@ -1,8 +1,1 @@
-
-"use strict";
-
-let StateCommand = require('./StateCommand.js');
-
-module.exports = {
-  StateCommand: StateCommand,
-};
+/home/ubuntu/Quadrotor/catkin_ws/devel/.private/quadrotor_state_machine/share/gennodejs/ros/quadrotor_state_machine/msg/_index.js

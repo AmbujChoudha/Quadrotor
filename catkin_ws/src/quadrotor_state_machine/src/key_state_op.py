@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #import state_machine.py
 import rospy
 #import math
